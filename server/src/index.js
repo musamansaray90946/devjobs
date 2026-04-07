@@ -4,7 +4,10 @@ require('dotenv').config()
 
 const app = express()
 
-app.use(cors({ origin: '*' }))
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://devjobs-umber.vercel.app'],
+  credentials: true
+}))
 app.use(express.json())
 
 app.use('/api/auth', require('./routes/auth'))
