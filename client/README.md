@@ -1,16 +1,54 @@
-# React + Vite
+# DevJobs — Full-Stack Job Board
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern job board platform built with React, Node.js, PostgreSQL & Prisma.
 
-Currently, two official plugins are available:
+**Live:** [https://devjobs-umber.vercel.app](https://devjobs-umber.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Browse and search jobs by title, location, and type
+- User authentication with JWT (Job Seeker, Employer, Admin roles)
+- Job seekers can apply with cover letters and track application status
+- Employers can post jobs, view applicants, and manage application status
+- Admin panel for managing all job listings
+- Fully responsive design with mobile hamburger menu
+- Production deployed with Vercel, Render, and Neon PostgreSQL
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+**Frontend:** React 19, React Router, Tailwind CSS 4, Vite, Axios
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Backend:** Node.js, Express, Prisma ORM, PostgreSQL, JWT, bcrypt
+
+**Deployment:** Vercel (frontend), Render (backend), Neon (database)
+
+## Getting Started
+```bash
+# Clone
+git clone https://github.com/musamansaray90946/devjobs.git
+
+# Backend
+cd server
+npm install
+cp .env.example .env  # Add your DATABASE_URL and JWT_SECRET
+npx prisma migrate dev
+node src/seed.js
+npm run dev
+
+# Frontend
+cd ../client
+npm install
+npm run dev
+```
+
+## Test Accounts
+
+- **Employer:** employer@techcorp.com / password123
+- **Admin:** admin@devjobs.com / password123
+
+## Author
+
+**Musa Mansaray** — Full-Stack Developer
+
+- GitHub: [musamansaray90946](https://github.com/musamansaray90946)
+- Portfolio: [musamansaray90946.github.io](https://musamansaray90946.github.io)
