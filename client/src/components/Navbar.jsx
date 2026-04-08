@@ -47,7 +47,7 @@ export default function Navbar() {
           )}
           {user ? (
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">Hi, {user.name}</span>
+              <Link to="/profile" className="text-sm text-gray-600 hover:text-gray-900 transition">Hi, {user.name}</Link>
               <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full capitalize">{user.role}</span>
               <button onClick={handleLogout} className="text-sm text-red-500 hover:text-red-600 transition">Logout</button>
             </div>
@@ -74,10 +74,10 @@ export default function Navbar() {
           )}
           {user ? (
             <div className="space-y-3 pt-3 border-t border-gray-100">
-              <div className="flex items-center gap-3">
+              <Link to="/profile" onClick={close} className="flex items-center gap-3">
                 <span className="text-sm text-gray-600">Hi, {user.name}</span>
                 <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full capitalize">{user.role}</span>
-              </div>
+              </Link>
               <button onClick={handleLogout} className="block text-sm text-red-500 hover:text-red-600">Logout</button>
             </div>
           ) : (

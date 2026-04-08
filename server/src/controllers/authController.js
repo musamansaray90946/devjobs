@@ -31,5 +31,33 @@ const login = async (req, res) => {
     res.status(500).json({ error: err.message })
   }
 }
+const getProfile = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.userId },
+      select: { id: true, name: true, email: true, role: true, createdAt: true }
+    })
+    res.json(user)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
 
-module.exports = { register, login }
+const updateProfile = async (req, res) => {
+  try {
+    const { name, email } = req.body
+    const existing = await prisma.user.findFirst({
+      where: { email, NOT: { id: req.userId } }
+    })
+    if (existing) return res.status(400).json({ error: 'Email already in use' })
+    const user = await prisma.user.update({
+      where: { id: req.userId },
+      data: { name, email },
+      select: { id: true, name: true, email: true, role: true }
+    })
+    res.json(user)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
+module.exports = { register, login, getProfile, updateProfile }

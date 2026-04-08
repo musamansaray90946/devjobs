@@ -10,6 +10,7 @@ import PostJob from './pages/PostJob'
 import Admin from './pages/Admin'
 import Applicants from './pages/Applicants'
 import NotFound from './pages/NotFound'
+import Profile from './pages/Profile'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
