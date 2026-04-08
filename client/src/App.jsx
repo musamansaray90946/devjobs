@@ -11,10 +11,11 @@ import Admin from './pages/Admin'
 import Applicants from './pages/Applicants'
 import NotFound from './pages/NotFound'
 import Profile from './pages/Profile'
+import EditJob from './pages/EditJob'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col transition-colors duration-300">
       <Navbar />
       <main className="flex-1">
         <Routes>
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/jobs/:id" element={<JobDetail />} />
+          <Route path="/jobs/:id/edit" element={<EditJob />} />
           <Route path="/jobs/:jobId/applicants" element={<Applicants />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/post-job" element={<PostJob />} />

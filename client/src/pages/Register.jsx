@@ -1,54 +1,47 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import axios from 'axios'
-
+import { useToast } from '../context/ToastContext'
 import API from '../config'
+import axios from 'axios'
 
 export default function Register() {
   const { login } = useAuth()
   const navigate = useNavigate()
+  const toast = useToast()
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'seeker' })
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setError('')
     try {
       const res = await axios.post(`${API}/auth/register`, form)
       login(res.data.user, res.data.token)
+      toast.success('Account created successfully!')
       navigate('/dashboard')
     } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed')
+      toast.error(err.response?.data?.error || 'Registration failed')
     }
     setLoading(false)
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Create account</h1>
-        <p className="text-gray-500 text-sm mb-6">Join DevJobs today</p>
-        {error && <p className="text-red-500 text-sm mb-4 bg-red-50 p-3 rounded-lg">{error}</p>}
+    <div className="min-h-[80vh] flex items-center justify-center px-6">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Create account</h1>
+        <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">Join DevJobs today</p>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input type="text" placeholder="Full name" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
-          <input type="email" placeholder="Email" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required />
-          <input type="password" placeholder="Password" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={form.password} onChange={e => setForm({...form, password: e.target.value})} required />
+          <input type="text" placeholder="Full name" className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
+          <input type="email" placeholder="Email" className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required />
+          <input type="password" placeholder="Password" className="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value={form.password} onChange={e => setForm({...form, password: e.target.value})} required />
           <div className="grid grid-cols-2 gap-3">
-            <button type="button" onClick={() => setForm({...form, role: 'seeker'})} className={`py-3 rounded-xl text-sm font-medium border transition ${form.role === 'seeker' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-200'}`}>
-              Job Seeker
-            </button>
-            <button type="button" onClick={() => setForm({...form, role: 'employer'})} className={`py-3 rounded-xl text-sm font-medium border transition ${form.role === 'employer' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-200'}`}>
-              Employer
-            </button>
+            <button type="button" onClick={() => setForm({...form, role: 'seeker'})} className={`py-3 rounded-xl text-sm font-medium border transition ${form.role === 'seeker' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600'}`}>Job Seeker</button>
+            <button type="button" onClick={() => setForm({...form, role: 'employer'})} className={`py-3 rounded-xl text-sm font-medium border transition ${form.role === 'employer' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600'}`}>Employer</button>
           </div>
-          <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white rounded-xl py-3 text-sm font-medium hover:bg-blue-700 transition disabled:opacity-50">
-            {loading ? 'Creating account...' : 'Create account'}
-          </button>
+          <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white rounded-xl py-3 text-sm font-medium hover:bg-blue-700 transition disabled:opacity-50">{loading ? 'Creating account...' : 'Create account'}</button>
         </form>
-        <p className="text-center text-sm text-gray-500 mt-4">Have an account? <Link to="/login" className="text-blue-600 hover:underline">Sign in</Link></p>
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">Have an account? <Link to="/login" className="text-blue-600 hover:underline">Sign in</Link></p>
       </div>
     </div>
   )

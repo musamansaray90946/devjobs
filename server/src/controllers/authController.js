@@ -31,6 +31,7 @@ const login = async (req, res) => {
     res.status(500).json({ error: err.message })
   }
 }
+
 const getProfile = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
@@ -60,4 +61,30 @@ const updateProfile = async (req, res) => {
     res.status(500).json({ error: err.message })
   }
 }
-module.exports = { register, login, getProfile, updateProfile }
+
+const getUsers = async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: { id: true, name: true, email: true, role: true, createdAt: true },
+      orderBy: { createdAt: 'desc' }
+    })
+    res.json(users)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
+
+const deleteUser = async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id)
+    await prisma.application.deleteMany({ where: { seekerId: userId } })
+    await prisma.application.deleteMany({ where: { job: { employerId: userId } } })
+    await prisma.job.deleteMany({ where: { employerId: userId } })
+    await prisma.user.delete({ where: { id: userId } })
+    res.json({ message: 'User deleted' })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
+
+module.exports = { register, login, getProfile, updateProfile, getUsers, deleteUser }

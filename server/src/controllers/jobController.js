@@ -57,7 +57,9 @@ const updateJob = async (req, res) => {
 
 const deleteJob = async (req, res) => {
   try {
-    await prisma.job.delete({ where: { id: parseInt(req.params.id) } })
+    const jobId = parseInt(req.params.id)
+    await prisma.application.deleteMany({ where: { jobId } })
+    await prisma.job.delete({ where: { id: jobId } })
     res.json({ message: 'Job deleted' })
   } catch (err) {
     res.status(500).json({ error: err.message })
